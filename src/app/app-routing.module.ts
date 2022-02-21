@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'setup-game',
+    loadChildren: () => import('./setup-game/setup-game.module').then( m => m.SetupGamePageModule)
+  },
+  {
+    path: 'play-game',
+    loadChildren: () => import('./play-game/play-game.module').then( m => m.PlayGamePageModule)
+  },
 ];
 
 @NgModule({
