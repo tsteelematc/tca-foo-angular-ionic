@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 
-interface Player {
+export interface Player {
   name: string;
   order: number;
 }
@@ -11,6 +11,11 @@ interface GameResult {
   end: string;
   winner: string;
   players: Player[];
+}
+
+interface CurrentGame {
+  start: string;
+  availablePlayers: Player[];
 }
 
 const game1: GameResult = {
@@ -46,6 +51,25 @@ export class GameService {
     ];
 
   };  
+
+  getUniquePlayers = () => (
+    [... new Set(this.gameResults.flatMap(x => x.players.map(y => y.name)))]
+  );
+
+  currentGame: CurrentGame = {
+    start: ""
+    , availablePlayers: [] 
+  };
+
+  setCurrentGame = (g: CurrentGame) => {
+    this.currentGame = g;
+  };
+
+  calculateShortestGame = () => (
+    Math.min(
+        ...this.gameResults.map(x => Date.parse(x.end) - Date.parse(x.start))
+    )
+);  
 
   constructor() { }
 }

@@ -22,10 +22,10 @@ export class PlayGamePage implements OnInit {
     // Add a new game result.
     this.gameSvc.addGameResult(
       {
-        start: ""
-        , end: ""
-        , winner: ""
-        , players: []
+        start: this.gameSvc.currentGame.start
+        , end: new Date().toISOString()
+        , winner: "Suzzie"
+        , players: this.gameSvc.currentGame.availablePlayers
       }
     );
 
