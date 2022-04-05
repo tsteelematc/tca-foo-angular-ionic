@@ -21,6 +21,24 @@
     Shortest Game (minutes): {{ shortestGame }}
   </h4>
 
+  <ion-grid>
+    <ion-row
+      *ngFor="let r of gameSvc.calculateLeaderboard()"
+    >
+      <ion-col>
+        {{ r.wins }}
+      </ion-col>
+      <ion-col>
+        {{ r.losses }}
+      </ion-col>
+      <ion-col>
+        {{ r.winningPercent }}
+      </ion-col>
+      <ion-col>
+        {{ r.name }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-button
     [routerLink]="['/setup']"
   >

@@ -5,14 +5,15 @@
 </ion-header>
 
 <ion-content>
-  <p  
+  <ion-button  
     *ngFor="let p of gameSvc.currentGame.availablePlayers"
+    (click)="endGame(p.name)"
   >
     {{ p.name }}
-  </p>
+  </ion-button>
   <ion-button
-    (click)="endGame()"
+    (click)="quitGame()"
   >
-    Done
+    Quit
   </ion-button>
 </ion-content>
