@@ -5,14 +5,16 @@
 </ion-header>
 
 <ion-content>
-  <p  
+  <ion-button  
     *ngFor="let p of gameSvc.currentGame.availablePlayers"
+    (click)="endGame(p.name)"
   >
-    {{ p.name }}
-  </p>
+    {{ p.name }} Won
+  </ion-button>
   <ion-button
-    (click)="endGame()"
+    (click)="quitGame()"
+    color="light"
   >
-    Done
+    Quit
   </ion-button>
 </ion-content>
