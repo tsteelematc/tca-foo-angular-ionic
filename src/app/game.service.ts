@@ -69,7 +69,25 @@ export class GameService {
     Math.min(
         ...this.gameResults.map(x => Date.parse(x.end) - Date.parse(x.start))
     )
-);  
+  );  
+
+  calculateLeaderboard = () => {
+
+    return this.getUniquePlayers().map(x => {
+
+        const userGamesPlayed = this.gameResults.filter(y => y.players.some(z => z.name === x));
+        const userGamesWon = userGamesPlayed.filter(y => y.winner === x);
+
+        return {
+            name: x
+            , wins: userGamesWon.length
+            , losses: userGamesPlayed.length - userGamesWon.length
+            , winningPercent: (userGamesWon.length / userGamesPlayed.length).toFixed(3)
+        };
+    }).sort(
+      (a, b) => a.winningPercent > b.winningPercent ? -1 : 1
+    );
+};
 
   constructor() { }
 }

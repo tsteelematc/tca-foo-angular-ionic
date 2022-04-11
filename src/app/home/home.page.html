@@ -21,6 +21,29 @@
     Shortest Game (minutes): {{ shortestGame }}
   </h4>
 
+  <h4>
+    Leaderboard
+  </h4>
+
+  <ion-grid>
+    <ion-row
+      *ngFor="let player of leaderboardData"
+    >
+      <ion-col>
+        {{ player.wins }}
+      </ion-col>
+      <ion-col>
+        {{ player.losses }}
+      </ion-col>
+      <ion-col>
+        {{ player.winningPercent }}
+      </ion-col>
+      <ion-col>
+        {{ player.name }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-button
     [routerLink]="['/setup']"
   >
