@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 
 export interface Player {
@@ -18,37 +19,21 @@ interface CurrentGame {
   availablePlayers: Player[];
 }
 
-const game1: GameResult = {
-  start: "2022-02-14T15:14:30"
-  , end: "2022-02-14T15:20:00"
-  , winner: "Me"
-  , players: [{ name: "Me", order: 1}, { name: "Taylor", order: 2}, {name: "Jack", order: 3}]
-};
-
-const game2: GameResult = {
-  start: "2022-02-14T21:00:30"
-  , end: "2022-02-14T21:30:30"
-  , winner: "Stephanie"
-  , players: [{ name: "Me", order: 1}, { name: "Stephanie", order: 2}, {name: "Jack", order: 3}]
-};
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  gameResults = [
-      game1
-      , game2
-  ];
+  gameResults = [];
 
-  addGameResult = (r: GameResult) => {
+  addGameResult = async (r: GameResult) => {
     
     this.gameResults = [
       ...this.gameResults
       , r
     ];
+
+    await this.storage.set("gameResults", this.gameResults);
 
   };  
 
@@ -89,5 +74,16 @@ export class GameService {
     );
 };
 
-  constructor() { }
+  constructor(
+    private storageSvc: Storage
+  ) { 
+    this.init();
+  }
+
+  private storage: Storage = undefined;
+
+  init = async () => {
+    this.storage = await this.storageSvc.create();
+    this.gameResults = await this.storage.get("gameResults") ?? [];
+  };
 }
