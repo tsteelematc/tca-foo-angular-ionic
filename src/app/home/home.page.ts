@@ -10,16 +10,10 @@ export class HomePage implements OnInit {
 
   constructor(private gameSvc: GameService) {}
 
-
-  shortestGame = 0;
-  leaderboardData = [];
-
   ngOnInit(): void {
   }
 
   ionViewDidEnter() {
-    this.shortestGame = this.gameSvc.calculateShortestGame() / 1000 / 60;  
-    this.leaderboardData = this.gameSvc.calculateLeaderboard();
   }
   
 }
