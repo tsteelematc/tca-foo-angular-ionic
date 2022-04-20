@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-
+import { saveGameToCloud, loadGamesFromCloud } from './TcaCloudApi';
 
 export interface Player {
   name: string;
@@ -33,8 +33,13 @@ export class GameService {
       , r
     ];
 
-    await this.storage.set("gameResults", this.gameResults);
-
+    // await this.storage.set("gameResults", this.gameResults);
+    await saveGameToCloud(
+      "tsteele@madisoncollege.edu"
+      , "tca-foo-angular-ionic"
+      , r.end
+      , r
+    );
   };  
 
   getUniquePlayers = () => (
@@ -84,6 +89,7 @@ export class GameService {
 
   init = async () => {
     this.storage = await this.storageSvc.create();
-    this.gameResults = await this.storage.get("gameResults") ?? [];
+    //this.gameResults = await this.storage.get("gameResults") ?? [];
+    this.gameResults = await loadGamesFromCloud("tsteele@madisoncollege.edu", "tca-foo-angular-ionic") ?? [];
   };
 }
