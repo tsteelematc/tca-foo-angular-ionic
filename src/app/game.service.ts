@@ -35,7 +35,7 @@ export class GameService {
 
     // await this.storage.set("gameResults", this.gameResults);
     await saveGameToCloud(
-      "tsteele@madisoncollege.edu"
+      this.emailAddress
       , "tca-foo-angular-ionic"
       , r.end
       , r
@@ -88,8 +88,22 @@ export class GameService {
   private storage: Storage = undefined;
 
   init = async () => {
-    this.storage = await this.storageSvc.create();
-    // this.gameResults = await this.storage.get("gameResults") ?? [];
-    this.gameResults = await loadGamesFromCloud("tsteele@madisoncollege.edu", "tca-foo-angular-ionic") ?? [];
+
+    if (this.storage === undefined) {
+      this.storage = await this.storageSvc.create();
+    }
+
+    this.emailAddress = await this.storage.get("emailForCloud") ?? "";
+
+    if (this.emailAddress.length > 0) {
+      this.gameResults = await loadGamesFromCloud(this.emailAddress, "tca-foo-angular-ionic") ?? [];
+    }
+  };
+
+  emailAddress = "";
+
+  saveEmailAddressAndReloadGames = async (newEmailAddress) => {
+    this.emailAddress = await this.storage.set('emailForCloud', newEmailAddress);
+    this.init();
   };
 }

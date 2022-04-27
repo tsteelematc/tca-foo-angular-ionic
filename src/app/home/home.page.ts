@@ -16,4 +16,9 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
   }
   
+  newEmailAddress = "";
+
+  saveEmailAddress = () => {
+    this.gameSvc.saveEmailAddressAndReloadGames(this.newEmailAddress);
+  };
 }
