@@ -15,5 +15,10 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
   }
-  
+ 
+  emailForEditing = "";
+
+  saveEmail = () => {
+    this.gameSvc.updateEmail(this.emailForEditing);
+  };
 }

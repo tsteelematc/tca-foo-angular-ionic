@@ -12,41 +12,66 @@
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <h4>
-    Total Games Played: {{ gameSvc.gameResults.length }}
-  </h4>
-
-  <h4>
-    Shortest Game (minutes): {{ gameSvc.calculateShortestGame() / 1000 / 60 }}
-  </h4>
-
-  <h4>
-    Leaderboard
-  </h4>
-
-  <ion-grid>
-    <ion-row
-      *ngFor="let player of gameSvc.calculateLeaderboard()"
-    >
-      <ion-col>
-        {{ player.wins }}
-      </ion-col>
-      <ion-col>
-        {{ player.losses }}
-      </ion-col>
-      <ion-col>
-        {{ player.winningPercent }}
-      </ion-col>
-      <ion-col>
-        {{ player.name }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-button
-    [routerLink]="['/setup']"
+  <div
+    *ngIf="gameSvc.emailAddress.length > 0"
   >
-    Play
-  </ion-button>
+    <h4>
+      {{ gameSvc.emailAddress }}
+      <ion-button
+        (click)="gameSvc.emailAddress = ''; emailForEditing = '';"
+      >
+        Reset
+      </ion-button>
+    </h4>
+    <h4>
+      Total Games Played: {{ gameSvc.gameResults.length }}
+    </h4>
+
+    <h4>
+      Shortest Game (minutes): {{ gameSvc.calculateShortestGame() / 1000 / 60 }}
+    </h4>
+
+    <h4>
+      Leaderboard
+    </h4>
+
+    <ion-grid>
+      <ion-row
+        *ngFor="let player of gameSvc.calculateLeaderboard()"
+      >
+        <ion-col>
+          {{ player.wins }}
+        </ion-col>
+        <ion-col>
+          {{ player.losses }}
+        </ion-col>
+        <ion-col>
+          {{ player.winningPercent }}
+        </ion-col>
+        <ion-col>
+          {{ player.name }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-button
+      [routerLink]="['/setup']"
+    >
+      Play
+    </ion-button>
+
+  </div>
+  <div
+    *ngIf="gameSvc.emailAddress.length === 0"
+  >
+    <ion-input
+      placeholder="Enter your email address"
+      [(ngModel)]="emailForEditing"
+    ></ion-input>
+    <ion-button
+      (click)="saveEmail()"
+    >
+      Save
+    </ion-button>
+  </div>
 </ion-content>
