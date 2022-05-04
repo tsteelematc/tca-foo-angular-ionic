@@ -8,7 +8,7 @@ import { GameService } from '../game.service';
 })
 export class HomePage implements OnInit {
 
-  constructor(private gameSvc: GameService) {}
+  constructor(public gameSvc: GameService) {}
 
   ngOnInit(): void {
   }

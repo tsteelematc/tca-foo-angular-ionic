@@ -10,7 +10,7 @@ import { GameService } from '../game.service';
 export class PlayGamePage implements OnInit {
 
   constructor(
-    private gameSvc: GameService
+    public gameSvc: GameService
     , private routerSvc: Router
   ) { }
 
